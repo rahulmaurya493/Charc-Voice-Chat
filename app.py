@@ -141,9 +141,10 @@ with chat_col:
         voice_badge = "🔊 Voice ON" if st.session_state.voice_on else "💬 Text Only"
         badge_color = "#e8f5e9" if st.session_state.voice_on else "#e3f2fd"
         badge_text  = "#2e7d32" if st.session_state.voice_on else "#1565c0"
+        safe_emoji = cdata.get('emoji', '').encode('utf-8', 'ignore').decode('utf-8')
         st.markdown(f"""
         <div class='active-banner'>
-          <div style='font-size:2rem'>{cdata['emoji']}</div>
+          <div style='font-size:2rem'>{safe_emoji}</div>
           <div>
             <div style='font-weight:600;font-size:1rem'>{char}</div>
             <div style='font-size:0.78rem;color:#888'>{cdata['title']} · {cdata['description']}</div>
