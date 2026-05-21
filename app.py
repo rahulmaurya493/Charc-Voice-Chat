@@ -383,7 +383,7 @@ with chat_col:
                     chat_html += f"<div class='chat-bubble-user'>{clean_text(msg['content'])}</div>"
                 else:
                     chat_html += f"<div class='chat-label-ai'>{clean_text(cdata['emoji'])} {clean_text(char)}</div>"
-                    chat_html += f"<div class='chat-bubble-ai' style='border-color:{cdata["color"]}66'>{clean_text(msg['content'])}</div>"
+                    chat_html += f"<div class='chat-bubble-ai' style='border-color:{cdata['color']}66'>{clean_text(msg['content'])}</div>"
         chat_html += "</div>"
         st.markdown(chat_html, unsafe_allow_html=True)
 
