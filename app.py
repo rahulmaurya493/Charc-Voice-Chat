@@ -103,8 +103,8 @@ with sidebar:
 
         if st.button(clean_label, key=clean_key, use_container_width=True, 
                  type="primary" if is_active else "secondary"):
-                        st.session_state.selected_char = char_name
-                         st.rerun()
+           st.session_state.selected_char = char_name
+           st.rerun()
 
     st.markdown("---")
 
