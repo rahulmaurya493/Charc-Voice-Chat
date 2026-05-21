@@ -123,48 +123,48 @@ with sidebar:
         st.rerun()
 
 # ── CHAT AREA ─────────────────────────────────────────────────────────────────
-with chat_col:
-    if not st.session_state.selected_char:
-        st.markdown("""
-        <div class='empty-state'>
-          <div style='font-size:3rem'>👈</div>
-          <p>Select a character from the left to start chatting!</p>
-        </div>
-        """, unsafe_allow_html=True)
-
-    else:
-        char    = st.session_state.selected_char
-        cdata   = CHARACTERS[char]
-        history = st.session_state.chat_histories.get(char, [])
-
-        # Banner
-# 1. Define this helper function at the top of your app if you haven't already
-def clean_text(text):
-    if not isinstance(text, str):
-        return str(text)
-    return text.encode('utf-8', 'ignore').decode('utf-8')
-
-# 2. Prepare the clean variables before the markdown block
-safe_emoji = clean_text(cdata.get('emoji', ''))
-safe_char = clean_text(char)
-safe_title = clean_text(cdata.get('title', ''))
-safe_desc = clean_text(cdata.get('description', ''))
-safe_badge = clean_text(voice_badge)
-
-# 3. Use the safe variables in your markdown
-st.markdown(f"""
-<div class='active-banner'>
-  <div style='font-size:2rem'>{safe_emoji}</div>
-  <div>
-    <div style='font-weight:600;font-size:1rem'>{safe_char}</div>
-    <div style='font-size:0.78rem;color:#888'>{safe_title} · {safe_desc}</div>
-  </div>
-  <div style='margin-left:auto;background:{badge_color};color:{badge_text};
-              font-size:0.75rem;font-weight:600;padding:3px 10px;border-radius:20px'>
-    {safe_badge}
-  </div>
-</div>
-""", unsafe_allow_html=True)
+    with chat_col:
+        if not st.session_state.selected_char:
+            st.markdown("""
+            <div class='empty-state'>
+              <div style='font-size:3rem'>👈</div>
+              <p>Select a character from the left to start chatting!</p>
+            </div>
+            """, unsafe_allow_html=True)
+    
+        else:
+            char    = st.session_state.selected_char
+            cdata   = CHARACTERS[char]
+            history = st.session_state.chat_histories.get(char, [])
+    
+            # Banner
+    # 1. Define this helper function at the top of your app if you haven't already
+    def clean_text(text):
+        if not isinstance(text, str):
+            return str(text)
+        return text.encode('utf-8', 'ignore').decode('utf-8')
+    
+    # 2. Prepare the clean variables before the markdown block
+    safe_emoji = clean_text(cdata.get('emoji', ''))
+    safe_char = clean_text(char)
+    safe_title = clean_text(cdata.get('title', ''))
+    safe_desc = clean_text(cdata.get('description', ''))
+    safe_badge = clean_text(voice_badge)
+    
+    # 3. Use the safe variables in your markdown
+    st.markdown(f"""
+    <div class='active-banner'>
+      <div style='font-size:2rem'>{safe_emoji}</div>
+      <div>
+        <div style='font-weight:600;font-size:1rem'>{safe_char}</div>
+        <div style='font-size:0.78rem;color:#888'>{safe_title} · {safe_desc}</div>
+      </div>
+      <div style='margin-left:auto;background:{badge_color};color:{badge_text};
+                  font-size:0.75rem;font-weight:600;padding:3px 10px;border-radius:20px'>
+        {safe_badge}
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
         # Chat bubbles
         chat_html = "<div class='chat-container'>"
         if not history:
