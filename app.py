@@ -97,10 +97,14 @@ with sidebar:
         if msg_count > 0:
             label += f"  · {msg_count}"
 
-        if st.button(label, key=f"btn_{char_name}", use_container_width=True,
-                     type="primary" if is_active else "secondary"):
-            st.session_state.selected_char = char_name
-            st.rerun()
+        # Create a cleaned version of the label and key to strip out broken characters
+        clean_label = label.encode('utf-8', 'ignore').decode('utf-8')
+        clean_key = f"btn_{char_name}".encode('utf-8', 'ignore').decode('utf-8')
+
+        if st.button(clean_label, key=clean_key, use_container_width=True, 
+                 type="primary" if is_active else "secondary"):
+                        st.session_state.selected_char = char_name
+                         st.rerun()
 
     st.markdown("---")
 
