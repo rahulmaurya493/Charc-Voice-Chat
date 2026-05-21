@@ -138,24 +138,33 @@ with chat_col:
         history = st.session_state.chat_histories.get(char, [])
 
         # Banner
-        voice_badge = "🔊 Voice ON" if st.session_state.voice_on else "💬 Text Only"
-        badge_color = "#e8f5e9" if st.session_state.voice_on else "#e3f2fd"
-        badge_text  = "#2e7d32" if st.session_state.voice_on else "#1565c0"
-        safe_emoji = cdata.get('emoji', '').encode('utf-8', 'ignore').decode('utf-8')
-        st.markdown(f"""
-        <div class='active-banner'>
-          <div style='font-size:2rem'>{safe_emoji}</div>
-          <div>
-            <div style='font-weight:600;font-size:1rem'>{char}</div>
-            <div style='font-size:0.78rem;color:#888'>{cdata['title']} · {cdata['description']}</div>
-          </div>
-          <div style='margin-left:auto;background:{badge_color};color:{badge_text};
-                      font-size:0.75rem;font-weight:600;padding:3px 10px;border-radius:20px'>
-            {voice_badge}
-          </div>
-        </div>
-        """, unsafe_allow_html=True)
+# 1. Define this helper function at the top of your app if you haven't already
+def clean_text(text):
+    if not isinstance(text, str):
+        return str(text)
+    return text.encode('utf-8', 'ignore').decode('utf-8')
 
+# 2. Prepare the clean variables before the markdown block
+safe_emoji = clean_text(cdata.get('emoji', ''))
+safe_char = clean_text(char)
+safe_title = clean_text(cdata.get('title', ''))
+safe_desc = clean_text(cdata.get('description', ''))
+safe_badge = clean_text(voice_badge)
+
+# 3. Use the safe variables in your markdown
+st.markdown(f"""
+<div class='active-banner'>
+  <div style='font-size:2rem'>{safe_emoji}</div>
+  <div>
+    <div style='font-weight:600;font-size:1rem'>{safe_char}</div>
+    <div style='font-size:0.78rem;color:#888'>{safe_title} · {safe_desc}</div>
+  </div>
+  <div style='margin-left:auto;background:{badge_color};color:{badge_text};
+              font-size:0.75rem;font-weight:600;padding:3px 10px;border-radius:20px'>
+    {safe_badge}
+  </div>
+</div>
+""", unsafe_allow_html=True)
         # Chat bubbles
         chat_html = "<div class='chat-container'>"
         if not history:
